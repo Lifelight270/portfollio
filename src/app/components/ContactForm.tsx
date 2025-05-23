@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState } from "react";
 
 const ContactForm: React.FC = () => {
@@ -51,7 +52,7 @@ const ContactForm: React.FC = () => {
     <section id="contact" className="py-20 bg-gray-900 text-white">
       <div className="max-w-6xl mx-auto px-4">
         <h2 className="text-3xl font-bold mb-8 text-center">
-          Let's Start a New Project
+          Let&apos;s Start a New Project
         </h2>
 
         {status === "SUCCESS" && (
@@ -103,16 +104,14 @@ const ContactForm: React.FC = () => {
             value={formData.message}
             onChange={handleChange}
             required
-            className="w-full p-3 rounded-md bg-gray-100 text-gray-900 outline-none focus:ring-2 focus:ring-blue-400 h-32"
-          ></textarea>
+            className="w-full p-3 rounded-md bg-gray-100 text-gray-900 outline-none focus:ring-2 focus:ring-blue-400 h-32"></textarea>
 
           <button
             type="submit"
             disabled={loading}
             className={`w-full p-3 bg-blue-600 rounded-md text-white transition hover:bg-blue-700 ${
               loading ? "opacity-50 cursor-not-allowed" : ""
-            }`}
-          >
+            }`}>
             {loading ? "Sending..." : "Submit"}
           </button>
         </form>

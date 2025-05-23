@@ -3,7 +3,7 @@
 import { motion, useMotionValue, useSpring } from 'framer-motion'
 import { useEffect } from 'react'
 
-// Custom hook to create a single spring-based motion point
+// ✅ Custom hook to create a spring-based motion dot
 function useCursorDot() {
   const x = useMotionValue(0)
   const y = useMotionValue(0)
@@ -23,8 +23,17 @@ const CursorTrail: React.FC = () => {
   const mouseX = useMotionValue(0)
   const mouseY = useMotionValue(0)
 
-  // Initialize dots once, all with valid hook usage
-  const dots = Array.from({ length: 8 }, () => useCursorDot())
+  // ✅ Call useCursorDot eight times directly
+  const dot0 = useCursorDot()
+  const dot1 = useCursorDot()
+  const dot2 = useCursorDot()
+  const dot3 = useCursorDot()
+  const dot4 = useCursorDot()
+  const dot5 = useCursorDot()
+  const dot6 = useCursorDot()
+  const dot7 = useCursorDot()
+
+  const dots = [dot0, dot1, dot2, dot3, dot4, dot5, dot6, dot7]
 
   useEffect(() => {
     const moveHandler = (e: MouseEvent) => {
@@ -38,10 +47,10 @@ const CursorTrail: React.FC = () => {
 
   useEffect(() => {
     const unsubX = mouseX.on('change', (val) => {
-      dots[0].set(val, dots[0].rawY.get())
+      dot0.set(val, dot0.rawY.get())
     })
     const unsubY = mouseY.on('change', (val) => {
-      dots[0].set(dots[0].rawX.get(), val)
+      dot0.set(dot0.rawX.get(), val)
     })
 
     const interval = setInterval(() => {
@@ -56,7 +65,7 @@ const CursorTrail: React.FC = () => {
       unsubY()
       clearInterval(interval)
     }
-  }, [mouseX, mouseY, dots])
+  }, [mouseX, mouseY])
 
   return (
     <>

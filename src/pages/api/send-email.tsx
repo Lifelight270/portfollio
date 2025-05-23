@@ -45,11 +45,14 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     await transporter.sendMail(mailOptions);
     return res.status(200).json({ message: "Email sent successfully." });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Email sending failed:", error);
-    return res
-      .status(500)
-      .json({ error: error.message || "Failed to send email." });
+
+    if (error instanceof Error) {
+      return res.status(500).json({ error: error.message });
+    }
+
+    return res.status(500).json({ error: "Failed to send email." });
   }
 };
 
