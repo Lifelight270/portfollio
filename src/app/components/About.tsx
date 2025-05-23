@@ -16,11 +16,9 @@ const About: React.FC = () => {
       id="about"
       className="py-24 bg-gradient-to-b from-white to-blue-50">
       <div className="max-w-6xl mx-auto px-4 flex flex-col md:flex-row items-center md:items-start space-y-12 md:space-y-0 md:space-x-16">
-
         {/* Photo Section with Gradient Border and Tilted Image */}
-        <div className="w-full md:w-1/2 flex justify-center">
+        <div className="w-screen md:w-1/2 flex justify-center">
           <div className="relative w-[320px] h-[400px] group">
-
             {/* Animated Gradient Border */}
             <motion.div
               className="absolute -inset-1 rounded-xl bg-gradient-to-r from-blue-600 via-purple-500 to-pink-500 opacity-75 blur-sm z-0"
@@ -60,11 +58,12 @@ const About: React.FC = () => {
               }}>
               <Image
                 src="/bio_pic.jpg"
-                alt="Your Name"
-                layout="fill"
-                objectFit="cover"
-                className="rounded-xl"
+                alt="Janak Bahadur Tharu"
+                fill
+                className="rounded-xl object-cover"
               />
+
+              {/* Overlay gradient on hover */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </motion.div>
           </div>

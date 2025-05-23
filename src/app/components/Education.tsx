@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { FaGraduationCap  } from "react-icons/fa";
+import { FaGraduationCap } from "react-icons/fa";
 import { motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 
@@ -44,25 +44,20 @@ const timelineData: Milestone[] = [
     description:
       "Currently pursuing studies in software development, data structures, algorithms, and embedded systems.",
   },
-  // {
-  //   id: 4,
-  //   date: "2021",
-  //   title: "Started a Company",
-  //   icon: FaLightbulb,
-  //   color: "bg-purple-500",
-  // },
 ];
 
 // 3. Main timeline wrapper
 const Education: React.FC = () => {
   return (
     <section id="education">
-      <div className="relative bg-gray-900 text-white py-16">
-        <h2 className="text-4xl font-bold text-center mb-20">Education</h2>
+      <div className="relative bg-gray-900 text-white py-16 px-4 sm:px-6">
+        <h2 className="text-3xl sm:text-4xl font-bold text-center mb-20">
+          Education
+        </h2>
 
-        <div className="relative w-full max-w-3xl mx-auto px-4">
+        <div className="relative w-full max-w-3xl mx-auto">
           {/* Vertical center line */}
-          <div className="absolute left-1/2 top-0 h-full w-1 bg-gray-700 opacity-30 -translate-x-1/2 z-0" />
+          <div className="hidden md:block absolute left-1/2 top-0 h-full w-1 bg-gray-700 opacity-30 -translate-x-1/2 z-0" />
 
           {timelineData.map((milestone, index) => (
             <MilestoneItem
@@ -124,32 +119,30 @@ const MilestoneItem: React.FC<{ milestone: Milestone; index: number }> = ({
   return (
     <div
       ref={ref}
-      className="relative z-10 mb-24 flex flex-col md:flex-row items-center w-full">
-      {/* Vertical animation bar segment */}
+      className="relative z-10 mb-20 flex flex-col md:flex-row items-center w-full">
+      {/* Vertical animation bar segment (desktop only) */}
       <motion.div
         initial="hidden"
         animate={controls}
         variants={verticalLineVariants}
-        className="absolute left-1/2 top-0 w-1 bg-gradient-to-b from-transparent to-white transform -translate-x-1/2 z-0 origin-top"
+        className="hidden md:block absolute left-1/2 top-0 w-1 bg-gradient-to-b from-transparent to-white transform -translate-x-1/2 z-0 origin-top"
       />
 
-      {/* Side spacer */}
+      {/* Side spacer (desktop only) */}
       <div
-        className={`w-full md:w-1/2 ${
-          isLeft ? "md:pr-[100px]" : "md:pl-[100px]"
-        } ${isLeft ? "md:order-1" : "md:order-2"}`}
+        className={`hidden md:block md:w-1/2 ${
+          isLeft ? "md:pr-[100px] md:order-1" : "md:pl-[100px] md:order-2"
+        }`}
       />
 
-      {/* Connector line from center to card */}
+      {/* Connector line from center to card (desktop only) */}
       <motion.div
         initial="hidden"
         animate={controls}
         variants={lineVariants}
-        className={`
-          hidden md:block h-1 bg-white absolute top-1/2 z-10 
-          ${isLeft ? "left-1/2" : "right-1/2"}
-          transform -translate-y-1/2
-        `}
+        className={`hidden md:block h-1 bg-white absolute top-1/2 z-10 ${
+          isLeft ? "left-1/2" : "right-1/2"
+        } transform -translate-y-1/2`}
       />
 
       {/* Card content */}
@@ -157,21 +150,21 @@ const MilestoneItem: React.FC<{ milestone: Milestone; index: number }> = ({
         initial="hidden"
         animate={controls}
         variants={cardVariants}
-        className={`w-full md:w-1/2 p-6 rounded-xl shadow-lg ${
+        className={`w-full md:w-1/2 p-4 sm:p-6 rounded-xl shadow-lg ${
           milestone.color
         } text-white z-10 ${
-          isLeft ? "md:order-2 ml-[60px]" : "md:order-1 mr-[60px]"
+          isLeft ? "md:order-2 md:ml-[60px]" : "md:order-1 md:mr-[60px]"
         }`}>
         <div className="flex flex-col items-start">
           <div className="flex items-center mb-3">
             <div className="bg-white p-2 rounded-full shadow">
-              <Icon className="text-2xl text-gray-900" />
+              <Icon className="text-xl sm:text-2xl text-gray-900" />
             </div>
-            <span className="ml-4 text-base font-semibold">
+            <span className="ml-3 text-sm sm:text-base font-semibold">
               {milestone.date}
             </span>
           </div>
-          <h3 className="text-xl font-bold">{milestone.title}</h3>
+          <h3 className="text-lg sm:text-xl font-bold">{milestone.title}</h3>
           <p className="text-sm mt-2 text-white/90">{milestone.description}</p>
         </div>
       </motion.div>
