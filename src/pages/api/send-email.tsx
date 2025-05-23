@@ -1,68 +1,56 @@
-// const nodemailer = require("nodemailer");
+import { NextApiRequest, NextApiResponse } from "next";
 import nodemailer from "nodemailer";
-import rateLimit from "express-rate-limit";
-// const rateLimit = require("express-rate-limit");
-const dotenv = require("dotenv");
 
-// Load environment variables
-dotenv.config();
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+  if (req.method !== "POST") {
+    return res.status(405).json({ error: "Method Not Allowed" });
+  }
 
-const emailLimiter = rateLimit({
-  windowMs: 60 * 60 * 1000, // 1 hour
-  max: 5, // limit each IP to 5 emails per windowMs
-  message: "Too many emails sent from this IP, please try again after an hour",
-  keyGenerator: (req: any) => req.ip,
-  handler: (req: any, res: any) => {
-    res.status(429).send({ message: emailLimiter.message });
-  },
-});
+  const { name, email, subject, message } = req.body;
 
-const handler = async (req: any, res: any) => {
-  console.log("Received Request Method:", req.method);
+  if (!name || !email || !subject || !message) {
+    return res.status(400).json({ error: "All fields are required." });
+  }
 
-  emailLimiter(req, res, async () => {
-    if (req.method === "POST") {
-      const { name, email, subject, message } = req.body;
-      console.log("Request Body:", req.body);
+  const user = process.env.EMAIL_USER;
+  const pass = process.env.EMAIL_PASSWORD;
 
-      // Create transporter using environment variables
-      const transporter = nodemailer.createTransport({
-        service: "gmail",
-        auth: {
-          user: process.env.EMAIL_USER, // Use your Gmail address here
-          pass: process.env.EMAIL_PASSWORD, // Use your app-specific password here
-        },
-      });
+  if (!user || !pass) {
+    console.error("Missing EMAIL_USER or EMAIL_PASSWORD in environment.");
+    return res.status(500).json({ error: "Email configuration error." });
+  }
 
-      // Verify transporter
-      transporter.verify((error: any, success: boolean) => {
-        if (error) {
-          console.error("Transporter Verification Error:", error);
-        } else {
-          console.log("Transporter is ready to send emails");
-        }
-      });
-
-      const mailOptions = {
-        from: email,
-        to: process.env.EMAIL_USER, // Your Gmail address here
-        subject: subject,
-        text: `From: ${name}\nEmail: ${email}\n\n${message}`,
-      };
-
-      try {
-        await transporter.sendMail(mailOptions);
-        console.log("Email sent successfully");
-        res.status(200).json({ message: "Email sent successfully" });
-      } catch (error: any) {
-        console.error("Error sending email:", error);
-        res.status(500).json({ error: error.message });
-      }
-    } else {
-      console.log("Invalid HTTP Method:", req.method);
-      res.status(405).json({ error: "Method not allowed" });
-    }
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user,
+      pass,
+    },
   });
+
+  try {
+    await transporter.verify();
+  } catch (error) {
+    console.error("Error verifying transporter:", error);
+    return res.status(500).json({ error: "Failed to verify email service." });
+  }
+
+  const mailOptions = {
+    from: `"${name}" <${email}>`,
+    to: user,
+    subject,
+    text: `Name: ${name}\nEmail: ${email}\n\n${message}`,
+  };
+
+  try {
+    await transporter.sendMail(mailOptions);
+    return res.status(200).json({ message: "Email sent successfully." });
+  } catch (error: any) {
+    console.error("Email sending failed:", error);
+    return res
+      .status(500)
+      .json({ error: error.message || "Failed to send email." });
+  }
 };
 
 export default handler;
