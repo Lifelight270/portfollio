@@ -1,12 +1,7 @@
 "use client";
 
 import React from "react";
-import {
-  FaGraduationCap,
-  FaBriefcase,
-  FaAward,
-  FaLightbulb,
-} from "react-icons/fa";
+import { FaGraduationCap  } from "react-icons/fa";
 import { motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 
@@ -177,9 +172,7 @@ const MilestoneItem: React.FC<{ milestone: Milestone; index: number }> = ({
             </span>
           </div>
           <h3 className="text-xl font-bold">{milestone.title}</h3>
-          <p className="text-sm mt-2 text-white/90">
-            {milestone.description}
-          </p>
+          <p className="text-sm mt-2 text-white/90">{milestone.description}</p>
         </div>
       </motion.div>
     </div>

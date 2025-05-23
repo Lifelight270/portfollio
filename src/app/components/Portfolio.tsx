@@ -3,7 +3,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { p } from "framer-motion/client";
+// import { p } from "framer-motion/client";  
 
 const Portfolio: React.FC = () => {
   const projects = [

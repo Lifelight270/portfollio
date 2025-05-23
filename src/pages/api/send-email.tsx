@@ -1,5 +1,7 @@
-const nodemailer = require("nodemailer");
-const rateLimit = require("express-rate-limit");
+// const nodemailer = require("nodemailer");
+import nodemailer from "nodemailer";
+import rateLimit from "express-rate-limit";
+// const rateLimit = require("express-rate-limit");
 const dotenv = require("dotenv");
 
 // Load environment variables
