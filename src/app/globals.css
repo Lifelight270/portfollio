@@ -1,6 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import "swiper/css";
+@import "swiper/css/effect-coverflow";
+@import "swiper/css/pagination";
 
 :root {
   --background: #ffffff;
@@ -18,4 +21,21 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+@keyframes blob {
+  0%,
+  100% {
+    transform: translate(0px, 0px);
+  }
+  33% {
+    transform: translate(30px, -50px);
+  }
+  66% {
+    transform: translate(-20px, 40px);
+  }
+}
+
+.animate-blob {
+  animation: blob 12s infinite ease-in-out;
 }
