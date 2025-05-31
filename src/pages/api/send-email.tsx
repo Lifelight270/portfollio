@@ -40,6 +40,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     to: user,
     subject,
     text: `Name: ${name}\nEmail: ${email}\n\n${message}`,
+    replyTo: email,
   };
 
   try {

@@ -11,16 +11,32 @@ import Service from "./components/Service";
 
 const Home: React.FC = () => {
   return (
-    <>
-      <Header />
-      <About />
-      <Education />
-      <Experience />
-      <Portfolio />
-      {/* <Blog/> */}
-      <Service/>
-      <ContactForm />
-    </>
+    <main className="w-full min-h-screen bg-white text-gray-900">
+      <div className="w-full space-y-16">
+        <section>
+          <Header />
+        </section>
+        <section>
+          <About />
+        </section>
+        <section>
+          <Education />
+        </section>
+        <section>
+          <Experience />
+        </section>
+        <section>
+          <Portfolio />
+        </section>
+        {/* <section><Blog /></section> */}
+        <section>
+          <Service />
+        </section>
+        <section>
+          <ContactForm />
+        </section>
+      </div>
+    </main>
   );
 };
 
