@@ -49,7 +49,7 @@ const Header: React.FC = () => {
 
   return (
     <>
-      <header className="bg-gray-900 text-white fixed top-0 left-0 w-screen z-50 shadow-md">
+      <header className="bg-gray-900 text-white fixed top-0 left-0 w-screen z-50 shadow-md overflow-hidden">
         <div className="max-w-screen-xl mx-auto px-4 sm:px-6 md:px-8 py-4 flex justify-between items-center">
           <motion.a
             href="#home"
@@ -127,9 +127,9 @@ const Header: React.FC = () => {
 
       <section
         id="home"
-        className="relative pt-32 md:pt-40 h-screen flex justify-center items-center text-center bg-gray-900 overflow-hidden">
+        className="relative pt-32 md:pt-40 min-h-screen flex justify-center items-center text-center bg-gray-900 overflow-hidden">
         <motion.div
-          className="absolute top-0 left-0 w-full h-full z-0 overflow-hidden"
+          className="absolute top-0 left-0 w-full h-full z-0 max-h-screen overflow-hidden"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1.2 }}>

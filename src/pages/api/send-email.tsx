@@ -1,7 +1,20 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import nodemailer from "nodemailer";
+import rateLimit from "express-rate-limit";
+import { runMiddleware } from "@/pages/api/utils/rateLimit"; // Adjust path as needed
+
+// 10 requests per 15 minutes
+const limiter = rateLimit({
+  windowMs: 60 * 60 * 1000,
+  max: 5,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: "Too many requests, please try again in an hour.",
+});
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+  await runMiddleware(req, res, limiter); // 👈 Apply limiter
+
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method Not Allowed" });
   }
@@ -22,10 +35,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   const transporter = nodemailer.createTransport({
     service: "gmail",
-    auth: {
-      user,
-      pass,
-    },
+    auth: { user, pass },
   });
 
   try {
@@ -48,11 +58,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(200).json({ message: "Email sent successfully." });
   } catch (error: unknown) {
     console.error("Email sending failed:", error);
-
     if (error instanceof Error) {
       return res.status(500).json({ error: error.message });
     }
-
     return res.status(500).json({ error: "Failed to send email." });
   }
 };

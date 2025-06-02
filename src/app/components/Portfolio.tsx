@@ -23,7 +23,7 @@ const Portfolio: React.FC = () => {
     },
     {
       title: "Project 3",
-      src: "/images/project6.jpg",
+      src: "#",
       link: "#",
       description: `Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aliquam, cum!`,
     },
