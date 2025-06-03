@@ -2,7 +2,7 @@
 "use client";
 
 import React from "react";
-import { easeIn, easeInOut, motion } from "framer-motion";
+import { easeInOut, motion } from "framer-motion";
 // import { p } from "framer-motion/client";  
 
 const Portfolio: React.FC = () => {
