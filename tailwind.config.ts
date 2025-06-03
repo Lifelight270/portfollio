@@ -12,6 +12,9 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      boxShadow: {
+        'custom-blue': '0px 0px 7px 1.5px rgba(100, 149, 255, 0.59)',
+      },
     },
     screens: {
       'xs': '480px',
@@ -21,6 +24,10 @@ export default {
       'lg': '1024px',
       'xl': '1280px',
     },  
+    fontFamily: {
+        lato: ['Lato', 'sans-serif'],
+        poppins: ['Poppins', 'sans-serif'],
+      },
   },
   plugins: [],
 } satisfies Config;

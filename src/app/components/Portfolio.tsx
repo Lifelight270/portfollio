@@ -2,7 +2,7 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
+import { easeIn, easeInOut, motion } from "framer-motion";
 // import { p } from "framer-motion/client";  
 
 const Portfolio: React.FC = () => {
@@ -23,8 +23,8 @@ const Portfolio: React.FC = () => {
     },
     {
       title: "Project 3",
-      src: "#",
-      link: "#",
+      src: "NepalPolice.png",
+      link: "https://lifelight270.github.io/police-nepal/",
       description: `Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aliquam, cum!`,
     },
   ];
@@ -45,11 +45,12 @@ const Portfolio: React.FC = () => {
               className="block">
               <motion.div
                 whileHover={{
-                  scale: 1.05,
-                  boxShadow: "0px 0px 12px 1px rgba(100, 149, 255, 0.59)",
+                  scale: 0.97,
+                  boxShadow: "0px 0px 7px 1px rgba(100, 149, 255, 0.59)",
                 }}
-                transition={{ type: "spring", stiffness: 300, duration: 0.2 }}
-                className="overflow-hidden rounded-[18px] outline-none bg-gray-200">
+                // transition={{ type: "spring", stiffness:180 , duration: 0.1 }}
+                transition={{ duration: 0.4, ease: easeInOut }}
+                className="overflow-hidden rounded-tl-[45px] rounded-br-[45px] shadow-custom-blue ">
                 <div className="relative">
                   <img
                     src={project.src}
@@ -57,16 +58,13 @@ const Portfolio: React.FC = () => {
                     className="w-full h-64 object-fill"
                   />
                   <h3
-                    className="absolute top-0 left-0 w-full text-center text-white text-lg font-semibold px-4 py-4"
-                    style={{
-                      background:
-                        "linear-gradient(to top, rgba(0, 0, 0, 0.86), rgba(0, 0, 0, 0.86))",
-                    }}>
+                    className="absolute bg-gray-900 text-white top-0 left-0 w-full text-center text-lg font-semibold px-4 py-4 scale-[1.0309] transition-all duration-300 ease-in-out "
+                  >
                     {project.title}
                   </h3>
                 </div>
-                <div className="p-4">
-                  <p className="text-gray-600 mt-2 text-justify">
+                <div className="p-4 scale-[1.0309] transition-all duration-300 ease-in-out">
+                  <p className="text-white mt-2 " style={{ color: "#F0F2F5" }}>
                     {project.description}
                   </p>
                 </div>
