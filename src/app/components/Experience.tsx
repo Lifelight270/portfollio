@@ -52,7 +52,7 @@ const Experience: React.FC = () => {
       // year: "2020 - 2021",
       description:
         "Designed and prototyped user-friendly interfaces for mobile and web applications.",
-      skills: ["React-Native","Node.js","Express"],
+      skills: ["React-Native", "Node.js", "Express"],
     },
     {
       position: "Full Stack Developer",
@@ -129,7 +129,7 @@ const Experience: React.FC = () => {
             }}
             loop={true}
             modules={[EffectCoverflow, Pagination, Autoplay, Navigation]}
-            className="mySwiper">
+            className="mySwiper mySwiper [&_.swiper-button-prev]:hidden [&_.swiper-button-next]:hidden md:[&_.swiper-button-prev]:block md:[&_.swiper-button-next]:block">
             {experienceData.map((item, index) => (
               <SwiperSlide
                 key={index}

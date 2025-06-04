@@ -1,9 +1,17 @@
 "use client";
 
 import React, { useState } from "react";
+import { motion } from "framer-motion";
 
 const ContactForm: React.FC = () => {
   const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+  });
+
+  const [errors, setErrors] = useState({
     name: "",
     email: "",
     subject: "",
@@ -18,12 +26,33 @@ const ContactForm: React.FC = () => {
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+
+    if (value.trim() !== "") {
+      setErrors((prev) => ({ ...prev, [name]: "" }));
+    }
+  };
+
+  const validate = () => {
+    const newErrors: any = {};
+    if (!formData.name.trim()) newErrors.name = "Name is required";
+    if (!formData.email.trim()) newErrors.email = "Email is required";
+    else if (
+      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(formData.email)
+    )
+      newErrors.email = "Email is invalid";
+    if (!formData.subject.trim()) newErrors.subject = "Subject is required";
+    if (!formData.message.trim()) newErrors.message = "Message is required";
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
     setStatus(null);
+    if (!validate()) return;
+
+    setLoading(true);
 
     try {
       const response = await fetch("/api/send-email", {
@@ -48,6 +77,44 @@ const ContactForm: React.FC = () => {
     }
   };
 
+  const renderInput = (
+    name: string,
+    label: string,
+    type: "text" | "email" = "text"
+  ) => (
+    <div className="relative w-full">
+      <input
+        type={type}
+        name={name}
+        id={name}
+        value={(formData as any)[name]}
+        onChange={handleChange}
+        className="peer w-full border-b-2 border-gray-400 bg-transparent text-white placeholder-transparent focus:outline-none focus:border-blue-400 pt-6 pb-2"
+        placeholder={label}
+        autoComplete="off"
+      />
+      <motion.label
+        htmlFor={name}
+        initial={false}
+        animate={{
+          top: (formData as any)[name] !== "" ? "0.25rem" : "1.3rem",
+          fontSize: (formData as any)[name] !== "" ? "0.75rem" : "1rem",
+          color: (formData as any)[name] !== "" ? "#60A5FA" : "#9CA3AF",
+        }}
+        transition={{ duration: 0.2, ease: "easeInOut" }}
+        className="absolute left-0 px-1 pointer-events-none transition-all"
+      >
+        {label}
+      </motion.label>
+
+      {errors[name as keyof typeof errors] && (
+        <p className="text-red-500 text-sm mt-1">
+          {errors[name as keyof typeof errors]}
+        </p>
+      )}
+    </div>
+  );
+
   return (
     <section id="contact" className="py-20 bg-gray-900 text-white">
       <div className="max-w-6xl mx-auto px-4">
@@ -66,52 +133,52 @@ const ContactForm: React.FC = () => {
           </p>
         )}
 
-        <form className="space-y-4" onSubmit={handleSubmit} noValidate>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <input
-              type="text"
-              name="name"
-              placeholder="Your Name"
-              value={formData.name}
-              onChange={handleChange}
-              required
-              autoComplete="name"
-              className="w-full p-3 rounded-md bg-gray-100 text-gray-900 outline-none focus:ring-2 focus:ring-blue-400"
-            />
-            <input
-              type="email"
-              name="email"
-              placeholder="Your Email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-              autoComplete="email"
-              className="w-full p-3 rounded-md bg-gray-100 text-gray-900 outline-none focus:ring-2 focus:ring-blue-400"
-            />
+        <form
+          className="space-y-6"
+          onSubmit={handleSubmit}
+          noValidate
+        >
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {renderInput("name", "Your Name")}
+            {renderInput("email", "Your Email", "email")}
           </div>
-          <input
-            type="text"
-            name="subject"
-            placeholder="Subject"
-            value={formData.subject}
-            onChange={handleChange}
-            required
-            className="w-full p-3 rounded-md bg-gray-100 text-gray-900 outline-none focus:ring-2 focus:ring-blue-400"
-          />
-          <textarea
-            name="message"
-            placeholder="Your Message"
-            value={formData.message}
-            onChange={handleChange}
-            required
-            className="w-full p-3 rounded-md bg-gray-100 text-gray-900 outline-none focus:ring-2 focus:ring-blue-400 h-32"></textarea>
+
+          {renderInput("subject", "Subject")}
+
+          <div className="relative">
+            <textarea
+              name="message"
+              id="message"
+              value={formData.message}
+              onChange={handleChange}
+              placeholder="Your Message"
+              className="peer w-full border-b-2 border-gray-400 bg-transparent text-white placeholder-transparent focus:outline-none focus:border-blue-400 pt-6 pb-2 h-32 resize-none"
+            />
+            <motion.label
+              htmlFor="message"
+              initial={false}
+              animate={{
+                top: formData.message !== "" ? "0.25rem" : "1.3rem",
+                fontSize: formData.message !== "" ? "0.75rem" : "1rem",
+                color: formData.message !== "" ? "#60A5FA" : "#9CA3AF",
+              }}
+              transition={{ duration: 0.2, ease: "easeInOut" }}
+              className="absolute left-0 px-1 pointer-events-none transition-all"
+            >
+              Your Message
+            </motion.label>
+
+            {errors.message && (
+              <p className="text-red-500 text-sm mt-1">{errors.message}</p>
+            )}
+          </div>
 
           <button
             type="submit"
             disabled={loading}
-            className={`w-full p-3 bg-blue-600 rounded-md text-white transition hover:bg-blue-700 ${
-              loading ? "opacity-50 cursor-not-allowed" : ""
-            }`}>
+            className={`w-full p-3 bg-blue-600 rounded-md text-white transition hover:bg-blue-700 ${loading ? "opacity-50 cursor-not-allowed" : ""
+              }`}
+          >
             {loading ? "Sending..." : "Submit"}
           </button>
         </form>

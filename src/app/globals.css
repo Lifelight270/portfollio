@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Poppins:wght@400;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Poppins:wght@400;600;700&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -12,7 +12,8 @@
   --foreground: #171717;
 }
 
-html, body {
+html,
+body {
   overflow-x: hidden;
 }
 
@@ -45,4 +46,3 @@ body {
 .animate-blob {
   animation: blob 12s infinite ease-in-out;
 }
-

@@ -22,10 +22,10 @@ const Portfolio: React.FC = () => {
         "Capture thoughts instantly. Organize notes. Sync everywhere. Simple, smart, fast",
     },
     {
-      title: "Project 3",
+      title: "Nepal Police",
       src: "NepalPolice.png",
       link: "https://lifelight270.github.io/police-nepal/",
-      description: `Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aliquam, cum!`,
+      description: `A simple site highlighting Nepal Police services and structure.`,
     },
   ];
 
@@ -50,7 +50,7 @@ const Portfolio: React.FC = () => {
                 }}
                 // transition={{ type: "spring", stiffness:180 , duration: 0.1 }}
                 transition={{ duration: 0.4, ease: easeInOut }}
-                className="overflow-hidden rounded-tl-[45px] rounded-br-[45px] shadow-custom-blue ">
+                className="overflow-hidden rounded-[25px] shadow-custom-blue ">
                 <div className="relative">
                   <img
                     src={project.src}
@@ -63,8 +63,8 @@ const Portfolio: React.FC = () => {
                     {project.title}
                   </h3>
                 </div>
-                <div className="p-4 scale-[1.0309] transition-all duration-300 ease-in-out">
-                  <p className="text-white mt-2 " style={{ color: "#F0F2F5" }}>
+                <div className="p-4 scale-[1.0309]  transition-all duration-300 ease-in-out">
+                  <p className="text-gray-700 text-sm  text-gray-300 " style={{ color: "#F0F2F5" }}>
                     {project.description}
                   </p>
                 </div>
