@@ -3,15 +3,20 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 
+// Type definitions
+type FormFields = "name" | "email" | "subject" | "message";
+type FormData = Record<FormFields, string>;
+type ErrorMessages = Record<FormFields, string>;
+
 const ContactForm: React.FC = () => {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
     subject: "",
     message: "",
   });
 
-  const [errors, setErrors] = useState({
+  const [errors, setErrors] = useState<ErrorMessages>({
     name: "",
     email: "",
     subject: "",
@@ -32,8 +37,14 @@ const ContactForm: React.FC = () => {
     }
   };
 
-  const validate = () => {
-    const newErrors: any = {};
+  const validate = (): boolean => {
+    const newErrors: ErrorMessages = {
+      name: "",
+      email: "",
+      subject: "",
+      message: "",
+    };
+
     if (!formData.name.trim()) newErrors.name = "Name is required";
     if (!formData.email.trim()) newErrors.email = "Email is required";
     else if (
@@ -44,7 +55,7 @@ const ContactForm: React.FC = () => {
     if (!formData.message.trim()) newErrors.message = "Message is required";
 
     setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+    return Object.values(newErrors).every((msg) => msg === "");
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -57,9 +68,7 @@ const ContactForm: React.FC = () => {
     try {
       const response = await fetch("/api/send-email", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
 
@@ -78,7 +87,7 @@ const ContactForm: React.FC = () => {
   };
 
   const renderInput = (
-    name: string,
+    name: keyof FormData,
     label: string,
     type: "text" | "email" = "text"
   ) => (
@@ -87,7 +96,7 @@ const ContactForm: React.FC = () => {
         type={type}
         name={name}
         id={name}
-        value={(formData as any)[name]}
+        value={formData[name]}
         onChange={handleChange}
         className="peer w-full border-b-2 border-gray-400 bg-transparent text-white placeholder-transparent focus:outline-none focus:border-blue-400 pt-6 pb-2"
         placeholder={label}
@@ -97,9 +106,9 @@ const ContactForm: React.FC = () => {
         htmlFor={name}
         initial={false}
         animate={{
-          top: (formData as any)[name] !== "" ? "0.25rem" : "1.3rem",
-          fontSize: (formData as any)[name] !== "" ? "0.75rem" : "1rem",
-          color: (formData as any)[name] !== "" ? "#60A5FA" : "#9CA3AF",
+          top: formData[name] !== "" ? "0.25rem" : "1.3rem",
+          fontSize: formData[name] !== "" ? "0.75rem" : "1rem",
+          color: formData[name] !== "" ? "#60A5FA" : "#9CA3AF",
         }}
         transition={{ duration: 0.2, ease: "easeInOut" }}
         className="absolute left-0 px-1 pointer-events-none transition-all"
@@ -107,10 +116,8 @@ const ContactForm: React.FC = () => {
         {label}
       </motion.label>
 
-      {errors[name as keyof typeof errors] && (
-        <p className="text-red-500 text-sm mt-1">
-          {errors[name as keyof typeof errors]}
-        </p>
+      {errors[name] && (
+        <p className="text-red-500 text-sm mt-1">{errors[name]}</p>
       )}
     </div>
   );
@@ -133,11 +140,7 @@ const ContactForm: React.FC = () => {
           </p>
         )}
 
-        <form
-          className="space-y-6"
-          onSubmit={handleSubmit}
-          noValidate
-        >
+        <form onSubmit={handleSubmit} className="space-y-6" noValidate>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {renderInput("name", "Your Name")}
             {renderInput("email", "Your Email", "email")}
@@ -176,8 +179,9 @@ const ContactForm: React.FC = () => {
           <button
             type="submit"
             disabled={loading}
-            className={`w-full p-3 bg-blue-600 rounded-md text-white transition hover:bg-blue-700 ${loading ? "opacity-50 cursor-not-allowed" : ""
-              }`}
+            className={`w-full p-3 bg-blue-600 rounded-md text-white transition hover:bg-blue-700 ${
+              loading ? "opacity-50 cursor-not-allowed" : ""
+            }`}
           >
             {loading ? "Sending..." : "Submit"}
           </button>
