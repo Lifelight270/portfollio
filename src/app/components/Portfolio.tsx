@@ -15,6 +15,13 @@ const Portfolio: React.FC = () => {
         "Seamless hotel booking. Best deals. Anywhere, anytime. Verified stays.",
     },
     {
+      title: "ChatApp",
+      src: "ChatApp.png",
+      link: "https://chatapp-p1zd.onrender.com",
+      description:
+        "Real-time messaging app with a simple UI for seamless, instant communication.",
+    },
+    {
       title: "Note App",
       src: "Noteapp.png",
       link: "https://note-app-front-eight.vercel.app/",
