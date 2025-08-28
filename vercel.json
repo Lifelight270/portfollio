@@ -1,0 +1,9 @@
+{
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "destination": "https://janaktharu.com.np/$1",
+      "permanent": true
+    }
+  ]
+}

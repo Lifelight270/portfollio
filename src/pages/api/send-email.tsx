@@ -3,6 +3,7 @@ import nodemailer from "nodemailer";
 import rateLimit from "express-rate-limit";
 import { runMiddleware } from "@/pages/api/utils/rateLimit"; // Adjust path as needed
 
+
 // 10 requests per 15 minutes
 const limiter = rateLimit({
   windowMs: 60 * 60 * 1000,
