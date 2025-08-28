@@ -1,7 +1,17 @@
 {
   "redirects": [
     {
-      "source": "/(.*)",
+      "source": "http://www.janaktharu.com.np/(.*)",
+      "destination": "https://janaktharu.com.np/$1",
+      "permanent": true
+    },
+    {
+      "source": "http://janaktharu.com.np/(.*)",
+      "destination": "https://janaktharu.com.np/$1",
+      "permanent": true
+    },
+    {
+      "source": "https://www.janaktharu.com.np/(.*)",
       "destination": "https://janaktharu.com.np/$1",
       "permanent": true
     }
