@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import nodemailer from "nodemailer";
 import rateLimit from "express-rate-limit";
-import { runMiddleware } from "@/pages/api/utils/rateLimit"; // Adjust path as needed
+import { runMiddleware } from "@/lib/rateLimit"; // Adjust path as needed
 
 
 // 10 requests per 15 minutes

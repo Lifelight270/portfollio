@@ -1,9 +1,9 @@
-'use client'
+"use client"
 
-import { motion, useMotionValue, useSpring } from 'framer-motion'
-import { useEffect } from 'react'
+import { motion, useMotionValue, useSpring } from "framer-motion"
+import { useEffect } from "react"
 
-// ✅ Custom hook to create a spring-based motion dot
+// ✅ Custom hook for spring-based motion dot
 function useCursorDot() {
   const x = useMotionValue(0)
   const y = useMotionValue(0)
@@ -23,7 +23,7 @@ const CursorTrail: React.FC = () => {
   const mouseX = useMotionValue(0)
   const mouseY = useMotionValue(0)
 
-  // ✅ Call useCursorDot eight times directly
+  // ✅ Call hooks at top level
   const dot0 = useCursorDot()
   const dot1 = useCursorDot()
   const dot2 = useCursorDot()
@@ -41,15 +41,15 @@ const CursorTrail: React.FC = () => {
       mouseY.set(e.clientY)
     }
 
-    window.addEventListener('mousemove', moveHandler)
-    return () => window.removeEventListener('mousemove', moveHandler)
+    window.addEventListener("mousemove", moveHandler)
+    return () => window.removeEventListener("mousemove", moveHandler)
   }, [mouseX, mouseY])
 
   useEffect(() => {
-    const unsubX = mouseX.on('change', (val) => {
+    const unsubX = mouseX.on("change", (val) => {
       dot0.set(val, dot0.rawY.get())
     })
-    const unsubY = mouseY.on('change', (val) => {
+    const unsubY = mouseY.on("change", (val) => {
       dot0.set(dot0.rawX.get(), val)
     })
 
@@ -65,7 +65,7 @@ const CursorTrail: React.FC = () => {
       unsubY()
       clearInterval(interval)
     }
-  }, [mouseX, mouseY])
+  }, [mouseX, mouseY, dots])
 
   return (
     <>
@@ -76,13 +76,13 @@ const CursorTrail: React.FC = () => {
             width: 12 - i * 0.8,
             height: 12 - i * 0.8,
             backgroundColor: `hsl(${200 + i * 10}, 100%, 60%)`,
-            borderRadius: '50%',
-            position: 'fixed',
+            borderRadius: "50%",
+            position: "fixed",
             top: 0,
             left: 0,
             translateX: dot.x,
             translateY: dot.y,
-            pointerEvents: 'none',
+            pointerEvents: "none",
             zIndex: 9999 - i,
             opacity: 1 - i * 0.1,
           }}
