@@ -116,7 +116,7 @@ const Header: React.FC = () => {
             ))}
             <a
               href="/Biodata.pdf"
-              download="Janak_Bahadur_Tharu_CV.pdf"
+              download="Biodata.pdf"
               onClick={closeMenu}
               className="inline-block mt-2 px-3 py-1.5 text-sm bg-blue-500 rounded-md hover:bg-blue-600 transition duration-200 md:px-4 md:py-2 md:text-base">
               Download CV
